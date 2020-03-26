@@ -15,7 +15,7 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.Set;
 
-public final class Menu implements Listener {
+public class Menu implements Listener {
     @Getter public Plugin plugin;
     @Getter public final Player player;
     @Getter public final Inventory inventory;
