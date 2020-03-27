@@ -13,9 +13,9 @@ public final class Blocks {
                 material.name().endsWith("_CHEST") || material.equals(Material.WORKBENCH) || material.equals(Material.FURNACE) ||
                         material.equals(Material.ENCHANTMENT_TABLE) || material.name().endsWith("ANVIL") || material.equals(Material.ITEM_FRAME) ||
                         material.equals(Material.BED) || material.equals(Material.BED_BLOCK) || material.equals(Material.LEVER) || material.name().endsWith("_PLATE") ||
-                        material.name().endsWith("_BUTTON") || material.name().endsWith("_TRAPDOOR") || material.name().endsWith("_FENCE_GATE") ||
-                        material.equals(Material.DAYLIGHT_DETECTOR) || material.equals(Material.HOPPER) || material.equals(Material.DROPPER) || material.name().endsWith("_DOOR") || material.equals(Material.DIODE) ||
-                        material.equals(Material.REDSTONE_COMPARATOR) || material.equals(Material.REDSTONE_COMPARATOR_OFF) || material.equals(Material.REDSTONE_COMPARATOR_ON) ||
-                        material.equals(Material.BEACON) || material.equals(Material.CAULDRON) || material.equals(Material.FLOWER_POT);
+                        material.name().endsWith("_BUTTON") || material.name().endsWith("_TRAPDOOR") || material.name().endsWith("_FENCE_GATE") || material.equals(Material.FENCE_GATE) ||
+                        material.equals(Material.DAYLIGHT_DETECTOR) || material.equals(Material.HOPPER) || material.equals(Material.DROPPER) || material.name().endsWith("_DOOR") ||
+                        material.equals(Material.DIODE) || material.equals(Material.REDSTONE_COMPARATOR) || material.equals(Material.REDSTONE_COMPARATOR_OFF) ||
+                        material.equals(Material.REDSTONE_COMPARATOR_ON) || material.equals(Material.BEACON) || material.equals(Material.CAULDRON) || material.equals(Material.FLOWER_POT);
     }
 }
