@@ -11,7 +11,7 @@ public final class Blocks {
      * Returns a collection of flat blockface directions
      * @return Collection of flat blockface directions
      */
-    public List<BlockFace> getFlatDirections() {
+    public static List<BlockFace> getFlatDirections() {
         return Arrays.asList(BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST);
     }
 
