@@ -1,8 +1,20 @@
 package com.llewkcor.ares.commons.util.bukkit;
 
 import org.bukkit.Material;
+import org.bukkit.block.BlockFace;
+
+import java.util.Arrays;
+import java.util.List;
 
 public final class Blocks {
+    /**
+     * Returns a collection of flat blockface directions
+     * @return Collection of flat blockface directions
+     */
+    public List<BlockFace> getFlatDirections() {
+        return Arrays.asList(BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST);
+    }
+
     /**
      * Returns true if the provided Bukkit Material can be interacted with
      * @param material Bukkit Material
