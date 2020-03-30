@@ -55,7 +55,7 @@ public final class Configs {
      * @param name File Name
      * @param config Config File
      */
-    public void saveConfig(Plugin plugin, String name, YamlConfiguration config) {
+    public static void saveConfig(Plugin plugin, String name, YamlConfiguration config) {
         final File file = new File(plugin.getDataFolder() + "/" + name + ".yml");
 
         if (!file.exists()) {
