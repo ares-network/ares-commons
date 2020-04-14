@@ -20,7 +20,7 @@ public enum RemappedEnchantment {
     BANE_OF_ARTHROPODS(Enchantment.DAMAGE_ARTHROPODS),
     KNOCKBACK(Enchantment.KNOCKBACK),
     FIRE_ASPECT(Enchantment.FIRE_ASPECT),
-    LOOTING(Enchantment.LOOT_BONUS_BLOCKS),
+    LOOTING(Enchantment.LOOT_BONUS_MOBS),
     FORTUNE(Enchantment.LOOT_BONUS_BLOCKS),
     EFFICIENCY(Enchantment.DIG_SPEED),
     SILK_TOUCH(Enchantment.SILK_TOUCH),
