@@ -2,6 +2,7 @@ package com.llewkcor.ares.commons.item;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.llewkcor.ares.commons.logger.Logger;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
@@ -149,6 +150,10 @@ public final class ItemBuilder {
 
         final ItemStack item = new ItemStack(material, amount, data);
         final ItemMeta meta = item.getItemMeta();
+
+        if (meta == null) {
+            throw new NullPointerException("ItemMeta is null for " + material.name());
+        }
 
         if (this.name != null) {
             meta.setDisplayName(this.name);
