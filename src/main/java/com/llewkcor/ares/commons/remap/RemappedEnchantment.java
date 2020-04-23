@@ -58,6 +58,10 @@ public enum RemappedEnchantment {
         for (RemappedEnchantment value : values()) {
             final String userFriendlyName = value.name().toLowerCase().replace("_", "");
 
+            if (value.name().equalsIgnoreCase(name)) {
+                return value.getEnchantment();
+            }
+
             if (userFriendlyName.equalsIgnoreCase(name)) {
                 return value.getEnchantment();
             }

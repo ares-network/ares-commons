@@ -57,7 +57,7 @@ public enum RemappedEffect {
         for (RemappedEffect value : values()) {
             final String userFriendlyName = value.name().toLowerCase().replace("_", "");
 
-            if (value.name().toLowerCase().equals(name)) {
+            if (value.name().equalsIgnoreCase(name)) {
                 return value.getType();
             }
 
