@@ -80,7 +80,7 @@ public final class AccountService implements AresService, Listener {
      * @param filter Filter
      * @return Ares Account
      */
-    private AresAccount getAccountFromDatabase(Bson filter) {
+    public AresAccount getAccountFromDatabase(Bson filter) {
         final MongoDB database = (MongoDB)owner.getDatabaseInstance(MongoDB.class);
 
         if (database == null) {
@@ -108,7 +108,7 @@ public final class AccountService implements AresService, Listener {
      * Handles saving a provided Ares Account to the database
      * @param account Ares Account
      */
-    private void setAccount(AresAccount account) {
+    public void setAccount(AresAccount account) {
         final MongoDB database = (MongoDB)owner.getDatabaseInstance(MongoDB.class);
 
         if (database == null) {
