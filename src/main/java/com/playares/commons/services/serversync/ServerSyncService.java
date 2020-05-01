@@ -88,7 +88,7 @@ public final class ServerSyncService implements AresService {
         final int serverId = configuration.getInt("server-settings.server-id");
         final String displayName = ChatColor.translateAlternateColorCodes('&', configuration.getString("server-settings.display-name"));
         final String bungeeName = configuration.getString("server-settings.bungee-name");
-        final String description = configuration.getString("server-settings.description");
+        final List<String> description = configuration.getStringList("server-settings.description");
         final SyncedServer.ServerType type = SyncedServer.ServerType.valueOf(configuration.getString("server-settings.type"));
         final int maxPlayers = configuration.getInt("server-settings.max-players");
         final int premiumAllocatedSlots = configuration.getInt("server-settings.premium-allocated-slots");

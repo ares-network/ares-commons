@@ -20,7 +20,7 @@ public final class SyncedServer implements MongoDocument<SyncedServer> {
     @Getter public int serverId;
     @Getter @Setter public String displayName;
     @Getter @Setter public String bungeeName;
-    @Getter @Setter public String description;
+    @Getter @Setter public List<String> description;
     @Getter public ServerType type;
     @Getter @Setter public ServerStatus status;
     @Getter @Setter public List<String> playerList;
@@ -32,7 +32,7 @@ public final class SyncedServer implements MongoDocument<SyncedServer> {
         this.serverId = 0;
         this.displayName = ChatColor.GOLD + "An Ares Server";
         this.bungeeName = "default";
-        this.description = ChatColor.GRAY + "This is the default description for an Ares Server";
+        this.description = Lists.newArrayList();
         this.type = ServerType.LOBBY;
         this.status = ServerStatus.OFFLINE;
         this.playerList = Lists.newArrayList();
@@ -73,7 +73,7 @@ public final class SyncedServer implements MongoDocument<SyncedServer> {
         this.serverId = document.getInteger("id");
         this.displayName = ChatColor.translateAlternateColorCodes('&', document.getString("display_name"));
         this.bungeeName = document.getString("bungeecord_name");
-        this.description = document.getString("description");
+        this.description = document.getList("description", String.class);
         this.type = ServerType.valueOf(document.getString("type"));
         this.status = ServerStatus.valueOf(document.getString("status"));
         this.playerList = (List<String>)document.get("player_list", List.class);
