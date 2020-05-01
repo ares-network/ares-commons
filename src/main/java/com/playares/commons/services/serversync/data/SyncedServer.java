@@ -3,7 +3,6 @@ package com.playares.commons.services.serversync.data;
 import com.google.common.collect.Lists;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import com.google.gson.annotations.SerializedName;
 import com.playares.commons.AresPlugin;
 import com.playares.commons.connect.mongodb.MongoDocument;
 import lombok.AllArgsConstructor;
@@ -90,6 +89,7 @@ public final class SyncedServer implements MongoDocument<SyncedServer> {
                 .append("id", serverId)
                 .append("display_name", displayName)
                 .append("bungeecord_name", bungeeName)
+                .append("description", description)
                 .append("type", type.name())
                 .append("status", status.name())
                 .append("player_list", playerList)
