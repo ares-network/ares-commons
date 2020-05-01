@@ -25,6 +25,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.Collections;
@@ -57,6 +58,7 @@ public final class ServerSyncService implements AresService {
         }
 
         owner.registerCommand(new SyncCommand(this));
+        owner.registerCommand(new HubCommand(this));
 
         load(); // Load server information from file
 
@@ -66,6 +68,10 @@ public final class ServerSyncService implements AresService {
             pull(); // Pull other servers to update the cache
 
         }).repeat(5 * 20L, 5 * 20L).run();
+
+        if (!owner.getServer().getMessenger().getOutgoingChannels().contains("BungeeCord")) {
+            owner.getServer().getMessenger().registerOutgoingPluginChannel(owner, "BungeeCord");
+        }
     }
 
     @Override
@@ -104,6 +110,23 @@ public final class ServerSyncService implements AresService {
                 playerList,
                 maxPlayers,
                 premiumAllocatedSlots));
+    }
+
+    /**
+     * Send a player to the lobby with a kick message
+     * @param player Player
+     * @param kickMessage Kick Message
+     */
+    public void kickToLobby(Player player, String kickMessage) {
+        final SyncedServer lobby = getLobby();
+
+        if (lobby == null) {
+            player.kickPlayer(kickMessage);
+            return;
+        }
+
+        player.sendMessage(kickMessage);
+        lobby.send(player);
     }
 
     /**
@@ -207,6 +230,24 @@ public final class ServerSyncService implements AresService {
         public void onReload(CommandSender sender) {
             load();
             sender.sendMessage(ChatColor.GREEN + "Reload complete");
+        }
+    }
+
+    @AllArgsConstructor
+    public final class HubCommand extends BaseCommand {
+        @Getter public final ServerSyncService service;
+
+        @CommandAlias("hub|lobby")
+        @Description("Return to the Hub")
+        public void onHub(Player player) {
+            final SyncedServer lobby = service.getLobby();
+
+            if (lobby == null) {
+                player.kickPlayer(ChatColor.GREEN + "Returned to Hub");
+                return;
+            }
+
+            lobby.send(player);
         }
     }
 }
