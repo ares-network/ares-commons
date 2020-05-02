@@ -64,7 +64,7 @@ public final class ServerSyncService implements AresService {
 
         this.updateTask = new Scheduler(owner).async(() -> {
 
-            push(false); // Push this servers information to the database
+            push(); // Push this servers information to the database
             pull(); // Pull other servers to update the cache
 
         }).repeat(5 * 20L, 5 * 20L).run();
@@ -76,7 +76,10 @@ public final class ServerSyncService implements AresService {
 
     @Override
     public void stop() {
-        push(true);
+        thisServer.getPlayerList().clear();
+        thisServer.setStatus(SyncedServer.ServerStatus.OFFLINE);
+
+        push();
 
         this.updateTask.cancel();
         this.updateTask = null;
@@ -148,19 +151,14 @@ public final class ServerSyncService implements AresService {
 
     /**
      * Pushes this servers configuration to others for them cache
-     * @param shutdown Sets the server status to offline
      */
-    private void push(boolean shutdown) {
+    private void push() {
         final List<String> playerList = Lists.newArrayList();
         Bukkit.getOnlinePlayers().forEach(player -> playerList.add(player.getName()));
         this.thisServer.setPlayerList(playerList);
 
-        if (shutdown) {
-            thisServer.setStatus(SyncedServer.ServerStatus.OFFLINE);
-        } else if (owner.getServer().hasWhitelist()) {
-            thisServer.setStatus(SyncedServer.ServerStatus.WHITELISTED);
-        } else {
-            thisServer.setStatus(SyncedServer.ServerStatus.ONLINE);
+        if (!thisServer.getStatus().equals(SyncedServer.ServerStatus.OFFLINE)) {
+            thisServer.setStatus((owner.getServer().hasWhitelist()) ? SyncedServer.ServerStatus.WHITELISTED : SyncedServer.ServerStatus.ONLINE);
         }
 
         final MongoDB database = (MongoDB)owner.getDatabaseInstance(MongoDB.class);
