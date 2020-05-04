@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.UUID;
 
 public final class AresAccount implements MongoDocument<AresAccount> {
-    @Getter public UUID uniqueId;
     @Getter public UUID bukkitId;
     @Getter @Setter public String username;
     @Getter public long initialLogin;
@@ -26,7 +25,6 @@ public final class AresAccount implements MongoDocument<AresAccount> {
      * Creates an empty Ares Account instance
      */
     public AresAccount() {
-        this.uniqueId = UUID.randomUUID();
         this.bukkitId = null;
         this.username = null;
         this.initialLogin = Time.now();
@@ -40,7 +38,6 @@ public final class AresAccount implements MongoDocument<AresAccount> {
      * @param player Bukkit Player
      */
     public AresAccount(Player player) {
-        this.uniqueId = UUID.randomUUID();
         this.bukkitId = player.getUniqueId();
         this.username = player.getName();
         this.initialLogin = Time.now();
@@ -55,7 +52,6 @@ public final class AresAccount implements MongoDocument<AresAccount> {
      * @param username Bukkit Username
      */
     public AresAccount(UUID bukkitId, String username) {
-        this.uniqueId = UUID.randomUUID();
         this.bukkitId = bukkitId;
         this.username = username;
         this.initialLogin = Time.now();
@@ -66,7 +62,6 @@ public final class AresAccount implements MongoDocument<AresAccount> {
 
     @SuppressWarnings("unchecked") @Override
     public AresAccount fromDocument(Document document) {
-        this.uniqueId = (UUID)document.get("ares_id");
         this.bukkitId = (UUID)document.get("bukkit_id");
         this.username = document.getString("username");
         this.initialLogin = document.getLong("initial_login");
@@ -80,7 +75,6 @@ public final class AresAccount implements MongoDocument<AresAccount> {
     @Override
     public Document toDocument() {
         return new Document()
-                .append("ares_id", uniqueId)
                 .append("bukkit_id", bukkitId)
                 .append("username", username)
                 .append("initial_login", initialLogin)

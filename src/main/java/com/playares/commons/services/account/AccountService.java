@@ -88,7 +88,7 @@ public final class AccountService implements AresService, Listener {
             return null;
         }
 
-        final MongoCollection<Document> collection = database.getCollection(databaseName, "accounts");
+        final MongoCollection<Document> collection = database.getCollection(databaseName, "account");
         final Document existing;
 
         if (collection == null) {
@@ -123,27 +123,13 @@ public final class AccountService implements AresService, Listener {
             return;
         }
 
-        existing = collection.find(Filters.eq("ares_id", account.getUniqueId())).first();
+        existing = collection.find(Filters.eq("bukkit_id", account.getBukkitId())).first();
 
         if (existing != null) {
             collection.replaceOne(existing, account.toDocument());
         } else {
             collection.insertOne(account.toDocument());
         }
-    }
-
-    /**
-     * Handles getting an account by Ares UUID
-     * @param aresUniqueId Ares UUID
-     * @param promise Promise
-     */
-    public void getAccountByAresID(UUID aresUniqueId, Promise<AresAccount> promise) {
-        new Scheduler(owner).async(() -> {
-
-            final AresAccount account = getAccountFromDatabase(Filters.eq("ares_id", aresUniqueId));
-            new Scheduler(owner).sync(() -> promise.ready(account)).run();
-
-        }).run();
     }
 
     /**
@@ -172,15 +158,6 @@ public final class AccountService implements AresService, Listener {
             new Scheduler(owner).sync(() -> promise.ready(account)).run();
 
         }).run();
-    }
-
-    /**
-     * Handles returning a cached Ares Account matching the provided Ares UUID
-     * @param aresUniqueId Ares UUID
-     * @return Ares Account
-     */
-    public AresAccount getAccountByAresID(UUID aresUniqueId) {
-        return accountRepository.stream().filter(account -> account.getUniqueId().equals(aresUniqueId)).findFirst().orElse(null);
     }
 
     /**
