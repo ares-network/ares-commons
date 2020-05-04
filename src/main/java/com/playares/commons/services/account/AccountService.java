@@ -11,6 +11,7 @@ import com.playares.commons.event.ProcessedChatEvent;
 import com.playares.commons.logger.Logger;
 import com.playares.commons.promise.Promise;
 import com.playares.commons.promise.SimplePromise;
+import com.playares.commons.services.account.command.SettingsCommand;
 import com.playares.commons.services.account.data.AresAccount;
 import com.playares.commons.services.account.menu.AccountMenu;
 import com.playares.commons.util.bukkit.Scheduler;
@@ -47,6 +48,7 @@ public final class AccountService implements AresService, Listener {
     @Override
     public void start() {
         owner.registerListener(this);
+        owner.registerCommand(new SettingsCommand(this));
     }
 
     @Override
