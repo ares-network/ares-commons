@@ -30,7 +30,8 @@ public enum RemappedEnchantment {
     FLAME(Enchantment.ARROW_FIRE),
     INFINITY(Enchantment.ARROW_INFINITE),
     LUCK(Enchantment.LUCK),
-    LURE(Enchantment.LURE);
+    LURE(Enchantment.LURE),
+    LUCK_OF_THE_SEA(Enchantment.LUCK);
 
     @Getter public final Enchantment enchantment;
 
