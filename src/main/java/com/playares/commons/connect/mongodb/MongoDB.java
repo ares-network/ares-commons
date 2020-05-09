@@ -1,5 +1,6 @@
 package com.playares.commons.connect.mongodb;
 
+import com.google.common.base.Preconditions;
 import com.playares.commons.connect.Connectable;
 import com.playares.commons.logger.Logger;
 import com.mongodb.client.MongoClient;
@@ -22,6 +23,7 @@ public final class MongoDB implements Connectable {
 
     @Override
     public void openConnection() {
+        Preconditions.checkNotNull(uri, "MongoDB URI can not be null");
         Logger.print("Establishing connection to MongoDB instance");
         this.client = MongoClients.create(uri);
         this.connected = true;
