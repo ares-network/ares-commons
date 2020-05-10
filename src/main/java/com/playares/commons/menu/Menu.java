@@ -1,6 +1,8 @@
 package com.playares.commons.menu;
 
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import com.playares.commons.util.bukkit.Scheduler;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -12,7 +14,9 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitTask;
 
+import java.util.Map;
 import java.util.Set;
 
 public class Menu implements Listener {
@@ -20,6 +24,7 @@ public class Menu implements Listener {
     @Getter public final Player player;
     @Getter public final Inventory inventory;
     @Getter public final Set<ClickableItem> items;
+    @Getter public final Map<BukkitTask, MenuUpdater> updateTasks;
 
     /**
      * Create a new Menu instance
@@ -33,6 +38,7 @@ public class Menu implements Listener {
         this.player = player;
         this.inventory = Bukkit.createInventory(null, (rows * 9), title);
         this.items = Sets.newConcurrentHashSet();
+        this.updateTasks = Maps.newHashMap();
 
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
@@ -132,6 +138,24 @@ public class Menu implements Listener {
     }
 
     /**
+     * Adds a new updater task to this menu
+     * @param updater Updater
+     * @param updateInterval Updater interval
+     */
+    public void addUpdater(MenuUpdater updater, long updateInterval) {
+        final BukkitTask task = new Scheduler(plugin).sync(updater::onUpdate).repeat(0L, updateInterval).run();
+        updateTasks.put(task, updater);
+    }
+
+    /**
+     * Flushes all updater tasks from this instance
+     */
+    public void flushUpdaters() {
+        updateTasks.keySet().forEach(BukkitTask::cancel);
+        updateTasks.clear();
+    }
+
+    /**
      * Open this menu for the player
      */
     public void open() {
@@ -147,6 +171,9 @@ public class Menu implements Listener {
         if (!event.getInventory().equals(inventory)) {
             return;
         }
+
+        updateTasks.keySet().forEach(BukkitTask::cancel);
+        updateTasks.clear();
 
         InventoryCloseEvent.getHandlerList().unregister(this);
         InventoryClickEvent.getHandlerList().unregister(this);
